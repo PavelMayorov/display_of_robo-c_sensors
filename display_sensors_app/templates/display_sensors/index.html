@@ -1,0 +1,70 @@
+<head>
+<script src="jquery-3.6.1.min.js"></script>
+</head>
+<body>
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;width:100%}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-6r19{background-color:#656565;border-color:#656565;color:#efefef;font-family:Arial, Helvetica, sans-serif !important;
+  font-weight:bold;text-align:center;vertical-align:middle}
+.tg .tg-rga9{background-color:#9b9b9b;border-color:#656565;color:#fffc9e;font-family:Arial, Helvetica, sans-serif !important;
+  font-size:large;font-weight:bold;text-align:center;vertical-align:middle}
+.tg .tg-5kxq{background-color:#656565;border-color:#656565;color:#efefef;text-align:center;vertical-align:middle}
+.tg .tg-un8y{background-color:#9b9b9b;border-color:#656565;color:#9aff99;font-family:Arial, Helvetica, sans-serif !important;
+  font-size:large;font-weight:bold;text-align:center;vertical-align:middle}
+.tg .tg-b23t{background-color:#656565;border-color:#656565;text-align:left;vertical-align:top}
+.tg .tg-wv3r{background-color:#9b9b9b;border-color:#656565;color:#ffce93;font-family:Arial, Helvetica, sans-serif !important;
+  font-size:x-large;font-weight:bold;text-align:center;vertical-align:middle}
+.tg .tg-dbvo{background-color:#9b9b9b;border-color:#656565;color:#fffc9e;font-family:Arial, Helvetica, sans-serif !important;
+  font-size:x-large;font-weight:bold;text-align:center;vertical-align:middle}
+.tg .tg-dj32{background-color:#656565;border-color:#656565;color:#efefef;text-align:center;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <td class="tg-6r19" rowspan="2">Выбранный зуб:</td>
+    <td class="tg-wv3r" rowspan="2">3.6</td>
+    <td class="tg-6r19">Температура зуба:</td>
+    <td id="temperature" class="tg-un8y">{{ temperature }}</td>
+    <td class="tg-6r19">Макс. глубина сверления:</td>
+    <td id="depth" class="tg-dbvo">{{ depth }}</td>
+    <td class="tg-6r19" rowspan="2">Выполнение работы:</td>
+    <td id="process" class="tg-dbvo" rowspan="2">В процессе</td>
+    <td class="tg-dj32" rowspan="2"><br><img src="https://robo-c.ru/wp-content/uploads/2019/12/Promobot_White.png" alt="Promobot logo" width="180" height="100"></td>
+    <td class="tg-5kxq" rowspan="2"><br><img src="https://innotech.pstu.ru/wp-content/uploads/2021/11/%D0%9B%D0%BE%D0%B3%D0%BE%D1%82%D0%B8%D0%BF-%D0%AD%D0%A2%D0%A4-%D0%B2-%D0%B1%D0%B5%D0%BB%D0%BE%D0%BC-%D0%BD%D0%B0%D1%87%D0%B5%D1%80%D1%82%D0%B0%D0%BD%D0%B8%D0%B8.png" alt="Image" width="285" height="100"></td>
+    <td class="tg-dj32" rowspan="2"><br><img src="https://www.psma.ru/templates/psma/images/logo.png" alt="Image" width="320" height="90"></td>
+  </tr>
+  <tr>
+    <td class="tg-6r19">Давление на зуб:</td>
+    <td id="pressure" class="tg-rga9">{{ pressure }}</td>
+    <td class="tg-6r19">Размер области:</td>
+    <td class="tg-rga9">2х3мм</td>
+    <td class="tg-b23t"></td>
+    <td class="tg-b23t"></td>
+  </tr>
+</thead>
+</table>
+</body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script>
+    function loadChirp(){
+        $('#pressure').html('' + '0.0' + '');
+        $.getJSON("http://192.168.50.147:8008",
+            function(data) {
+                $('#temperature').html('' + data.temp_sense + '');
+				$('#pressure').html('' + data.pres_sense + '');
+				//$('#depth').html('' + data.depth + '');
+				//if (data.temp_sense[5] > 1.0) {
+				//$('#process').html('Успешно');
+				//}
+            });
+            setTimeout(() => loadChirp(), 1000)
+    }
+
+    $(document).ready(function(){
+    loadChirp();
+    });
+</script>
